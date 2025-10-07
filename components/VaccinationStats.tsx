@@ -1,12 +1,23 @@
-import { vaccinationData } from "@/data/vaccinationData";
 import { Card } from "@/components/ui/card";
 import { Users, Syringe, CheckCircle2, TrendingUp } from "lucide-react";
+import { VaccinationData } from "@/types/vaccination";
 
-const VaccinationStats = () => {
-  const totalPopulation = vaccinationData.reduce((sum, state) => sum + state.totalPopulation, 0);
-  const totalFirstDose = vaccinationData.reduce((sum, state) => sum + state.firstDose, 0);
-  const totalSecondDose = vaccinationData.reduce((sum, state) => sum + state.secondDose, 0);
-  const avgVaccinationRate = (vaccinationData.reduce((sum, state) => sum + state.fullyVaccinatedPercent, 0) / vaccinationData.length).toFixed(1);
+interface VaccinationStatsProps {
+  data: VaccinationData[];
+  loading: boolean;
+  error: string | null;
+}
+
+const VaccinationStats = ({ data, loading, error }: VaccinationStatsProps) => {
+
+
+  if (loading) return <div className="text-center py-8">Loading vaccination stats...</div>;
+  if (error) return <div className="text-center py-8 text-red-500">Error: {error}</div>;
+
+  const totalPopulation = data.reduce((sum, state) => sum + state.totalPopulation, 0);
+  const totalFirstDose = data.reduce((sum, state) => sum + state.firstDose, 0);
+  const totalSecondDose = data.reduce((sum, state) => sum + state.secondDose, 0);
+  const avgVaccinationRate = (data.reduce((sum, state) => sum + state.fullyVaccinatedPercent, 0) / data.length).toFixed(1);
 
   const stats = [
     {

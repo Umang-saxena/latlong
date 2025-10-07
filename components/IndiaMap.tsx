@@ -1,21 +1,32 @@
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
-import { vaccinationData, getVaccinationColor } from "@/data/vaccinationData";
+import { VaccinationData } from "@/types/vaccination";
+
+const getVaccinationColor = (percent: number): string => {
+    if (percent < 75) return "hsl(var(--vac-very-low))";
+    if (percent < 80) return "hsl(var(--vac-low))";
+    if (percent < 85) return "hsl(var(--vac-medium))";
+    if (percent < 90) return "hsl(var(--vac-high))";
+    return "hsl(var(--vac-very-high))";
+};
 
 interface IndiaMapProps {
+    data: VaccinationData[];
+    loading: boolean;
+    error: string | null;
     onStateHover: (state: string | null) => void;
 }
 
-const IndiaMap = ({ onStateHover }: IndiaMapProps) => {
+const IndiaMap = ({ data, loading, error, onStateHover }: IndiaMapProps) => {
     const [tooltip, setTooltip] = useState<{ state: string; percent: number; x: number; y: number } | null>(null);
 
     const handleMouseEnter = (state: string, event: React.MouseEvent<SVGPathElement>) => {
-        const data = vaccinationData.find(d => d.state === state);
-        if (data) {
+        const stateData = data.find(d => d.state === state);
+        if (stateData) {
             const rect = event.currentTarget.getBoundingClientRect();
             setTooltip({
-                state: data.state,
-                percent: data.fullyVaccinatedPercent,
+                state: stateData.state,
+                percent: stateData.fullyVaccinatedPercent,
                 x: event.clientX,
                 y: event.clientY
             });
@@ -29,9 +40,12 @@ const IndiaMap = ({ onStateHover }: IndiaMapProps) => {
     };
 
     const getStateFill = (stateName: string) => {
-        const data = vaccinationData.find(d => d.state === stateName);
-        return data ? getVaccinationColor(data.fullyVaccinatedPercent) : "hsl(var(--muted))";
+        const stateData = data.find(d => d.state === stateName);
+        return stateData ? getVaccinationColor(stateData.fullyVaccinatedPercent) : "hsl(var(--muted))";
     };
+
+    if (loading) return <Card className="p-6 border-border"><div className="text-center py-8">Loading map...</div></Card>;
+    if (error) return <Card className="p-6 border-border"><div className="text-center py-8 text-red-500">Error: {error}</div></Card>;
 
     const stateData = [
         { name: "Jammu and Kashmir", d: "M185 25 L195 20 L205 25 L210 35 L205 45 L195 50 L185 45 L180 35 Z" },

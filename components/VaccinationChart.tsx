@@ -1,13 +1,28 @@
 import { Card } from "@/components/ui/card";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts";
-import { vaccinationData, getVaccinationColor } from "@/data/vaccinationData";
+import { VaccinationData } from "@/types/vaccination";
+
+const getVaccinationColor = (percent: number): string => {
+  if (percent < 75) return "hsl(var(--vac-very-low))";
+  if (percent < 80) return "hsl(var(--vac-low))";
+  if (percent < 85) return "hsl(var(--vac-medium))";
+  if (percent < 90) return "hsl(var(--vac-high))";
+  return "hsl(var(--vac-very-high))";
+};
 
 interface VaccinationChartProps {
+    data: VaccinationData[];
+    loading: boolean;
+    error: string | null;
     hoveredState: string | null;
 }
 
-const VaccinationChart = ({ hoveredState }: VaccinationChartProps) => {
-    const sortedData = [...vaccinationData]
+const VaccinationChart = ({ data, loading, error, hoveredState }: VaccinationChartProps) => {
+
+  if (loading) return <Card className="p-6 border-border"><div className="text-center py-8">Loading chart...</div></Card>;
+  if (error) return <Card className="p-6 border-border"><div className="text-center py-8 text-red-500">Error: {error}</div></Card>;
+
+    const sortedData = [...data]
         .sort((a, b) => b.fullyVaccinatedPercent - a.fullyVaccinatedPercent)
         .slice(0, 15);
 
