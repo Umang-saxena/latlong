@@ -2,11 +2,11 @@ import { Card } from "@/components/ui/card";
 
 const ColorLegend = () => {
     const legendItems = [
-        { label: "< 75%", color: "hsl(var(--vac-very-low))" },
-        { label: "75-80%", color: "hsl(var(--vac-low))" },
-        { label: "80-85%", color: "hsl(var(--vac-medium))" },
-        { label: "85-90%", color: "hsl(var(--vac-high))" },
-        { label: "≥ 90%", color: "hsl(var(--vac-very-high))" },
+        { label: "< 35%", color: "hsl(var(--vac-very-low))" },
+        { label: "35-40%", color: "hsl(var(--vac-low))" },
+        { label: "40-45%", color: "hsl(var(--vac-medium))" },
+        { label: "45-50%", color: "hsl(var(--vac-high))" },
+        { label: "≥ 50%", color: "hsl(var(--vac-very-high))" },
     ];
 
     return (

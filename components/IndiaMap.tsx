@@ -3,10 +3,10 @@ import { Card } from "@/components/ui/card";
 import { VaccinationData } from "@/types/vaccination";
 
 const getVaccinationColor = (percent: number): string => {
-    if (percent < 75) return "hsl(var(--vac-very-low))";
-    if (percent < 80) return "hsl(var(--vac-low))";
-    if (percent < 85) return "hsl(var(--vac-medium))";
-    if (percent < 90) return "hsl(var(--vac-high))";
+    if (percent < 35) return "hsl(var(--vac-very-low))";
+    if (percent < 40) return "hsl(var(--vac-low))";
+    if (percent < 45) return "hsl(var(--vac-medium))";
+    if (percent < 50) return "hsl(var(--vac-high))";
     return "hsl(var(--vac-very-high))";
 };
 
