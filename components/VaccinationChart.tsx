@@ -33,7 +33,7 @@ const VaccinationChart = ({ data, loading, error, hoveredState }: VaccinationCha
                 <BarChart data={sortedData} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
                     <XAxis
-                        dataKey="stateCode"
+                        dataKey="state"
                         angle={-45}
                         textAnchor="end"
                         height={80}
