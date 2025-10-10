@@ -79,7 +79,11 @@ const IndiaMap = ({ data, loading, error, onStateHover }: IndiaMapProps) => {
         { name: "Mizoram", d: "M420 245 L435 240 L440 255 L435 270 L420 265 Z" },
         { name: "Tripura", d: "M405 210 L420 205 L425 220 L420 235 L405 230 Z" },
         { name: "Meghalaya", d: "M385 195 L405 190 L410 205 L405 220 L385 215 Z" },
-        { name: "Puducherry", d: "M270 340 L280 335 L285 345 L280 355 L270 350 Z" }
+        { name: "Puducherry", d: "M270 340 L280 335 L285 345 L280 355 L270 350 Z" },
+        { name: "Chandigarh", d: "M200 75 L205 75 L205 80 L200 80 Z" },
+        { name: "Dadra and Nagar Haveli and Daman and Diu", d: "M155 185 L160 185 L160 190 L155 190 Z" },
+        { name: "Andaman and Nicobar Islands", d: "M380 280 L390 280 L390 290 L380 290 Z" },
+        { name: "Lakshadweep", d: "M120 250 L125 250 L125 255 L120 255 Z" }
     ];
 
     return (
