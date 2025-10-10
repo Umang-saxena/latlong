@@ -7,8 +7,8 @@ interface RateRangeSliderProps {
 
 const RateRangeSlider = ({ minRate, maxRate, onMinRateChange, onMaxRateChange }: RateRangeSliderProps) => {
   return (
-    <div className="space-y-4">
-      <div>
+    <div className="flex gap-4">
+      <div className="flex-1">
         <label htmlFor="min-rate" className="text-sm font-medium">Min Vaccination Rate: {minRate}%</label>
         <input
           id="min-rate"
@@ -20,7 +20,7 @@ const RateRangeSlider = ({ minRate, maxRate, onMinRateChange, onMaxRateChange }:
           className="w-full"
         />
       </div>
-      <div>
+      <div className="flex-1">
         <label htmlFor="max-rate" className="text-sm font-medium">Max Vaccination Rate: {maxRate}%</label>
         <input
           id="max-rate"
