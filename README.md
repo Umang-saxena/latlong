@@ -1,36 +1,91 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# India Vaccination Dashboard
 
-## Getting Started
+An interactive web application for visualizing and analyzing COVID-19 vaccination coverage across Indian states. Built with Next.js, this dashboard provides real-time insights through maps, charts, statistics, and data tables.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Interactive India Map**: Hover and click on states to view vaccination details using jVectorMap.
+- **Vaccination Statistics**: Key metrics displayed in cards, including total population, first dose, second dose, and fully vaccinated percentages.
+- **Data Visualizations**: Bar charts and pie charts for vaccination rates using Recharts.
+- **Data Table**: Sortable and filterable table of state-wise vaccination data.
+- **Filters**: Select by region (e.g., North, South) and adjust vaccination rate ranges with sliders.
+- **State Details Dialog**: Detailed view for selected states.
+- **Responsive Design**: Optimized for desktop and mobile using Tailwind CSS.
+- **Loading States**: Smooth loading animations with spinning icons.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Framework**: Next.js 15 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **UI Components**: Radix UI
+- **Charts**: Recharts
+- **Maps**: React jVectorMap (India-specific)
+- **Icons**: Lucide React
+- **Data**: Supabase (for vaccination data storage and API)
+- **Deployment**: Vercel
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Prerequisites
 
-## Learn More
+- Node.js (version 18 or higher)
+- A Supabase account and project for vaccination data (or modify API to use another source)
 
-To learn more about Next.js, take a look at the following resources:
+## Setup
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **Clone the repository**:
+   ```bash
+   git clone <repository-url>
+   cd latlong
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
 
-## Deploy on Vercel
+3. **Set up environment variables**:
+   Create a `.env.local` file in the root directory and add your Supabase credentials:
+   ```
+   NEXT_PUBLIC_SUPABASE_URL=your-supabase-project-url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+4. **Run the development server**:
+   ```bash
+   npm run dev
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+   Open [http://localhost:3000](http://localhost:3000) in your browser to view the dashboard.
+
+## Usage
+
+- **Navigate the Map**: Hover over states for quick stats; click to open detailed dialogs.
+- **Apply Filters**: Use the region selector and rate slider to filter displayed data.
+- **View Charts and Tables**: Explore vaccination trends and compare states.
+- **Data Source**: Vaccination data is fetched from the `/api/vaccination` endpoint, which queries Supabase.
+
+## API
+
+- **Endpoint**: `/api/vaccination`
+- **Method**: GET
+- **Response**: JSON array of state vaccination data (e.g., state name, total population, doses administered).
+- **Source**: Data stored in Supabase; modify `app/api/vaccination/route.ts` for custom data sources.
+
+## Deployment
+
+Deploy to Vercel for easy integration with Next.js:
+
+1. Push your code to a GitHub repository.
+2. Connect the repo to Vercel.
+3. Add environment variables in Vercel's dashboard.
+4. Deploy and access your live dashboard.
+
+For other platforms, ensure environment variables are set and build with `npm run build`.
+
+## Contributing
+
+Contributions are welcome! Please open issues or submit pull requests on GitHub.
+
+## License
+
+This project is open-source. Check the license file for details.

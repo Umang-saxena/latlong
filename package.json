@@ -1,7 +1,8 @@
 {
-  "name": "latlong",
+  "name": "india-vaccination-dashboard",
   "version": "0.1.0",
   "private": true,
+  "description": "Interactive dashboard for visualizing COVID-19 vaccination coverage across Indian states.",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
