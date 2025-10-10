@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts";
+import { Loader } from "lucide-react";
 import { VaccinationData } from "@/types/vaccination";
 
 const getVaccinationColor = (percent: number): string => {
@@ -19,7 +20,7 @@ interface VaccinationChartProps {
 
 const VaccinationChart = ({ data, loading, error, hoveredState }: VaccinationChartProps) => {
 
-  if (loading) return <Card className="p-6 border-border"><div className="text-center py-8">Loading chart...</div></Card>;
+  if (loading) return <Card className="p-6 border-border"><div className="flex justify-center items-center py-8"><Loader className="w-8 h-8 animate-spin text-primary" /></div></Card>;
   if (error) return <Card className="p-6 border-border"><div className="text-center py-8 text-red-500">Error: {error}</div></Card>;
 
     const sortedData = [...data]

@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card";
-import { Users, Syringe, CheckCircle2, TrendingUp } from "lucide-react";
+import { Users, Syringe, CheckCircle2, TrendingUp, Loader } from "lucide-react";
 import { VaccinationData } from "@/types/vaccination";
 
 interface VaccinationStatsProps {
@@ -11,7 +11,7 @@ interface VaccinationStatsProps {
 const VaccinationStats = ({ data, loading, error }: VaccinationStatsProps) => {
 
 
-  if (loading) return <div className="text-center py-8">Loading vaccination stats...</div>;
+  if (loading) return <Card className="p-6 border-border"><div className="flex justify-center items-center py-8"><Loader className="w-8 h-8 animate-spin text-primary" /></div></Card>;
   if (error) return <div className="text-center py-8 text-red-500">Error: {error}</div>;
 
   const totalPopulation = data.reduce((sum, state) => sum + state.totalPopulation, 0);

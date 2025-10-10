@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
+import { Loader } from "lucide-react";
 import { VaccinationData } from "@/types/vaccination";
 import { indiaStates } from "../data/indiaStates";
 
@@ -52,7 +53,7 @@ const IndiaMap = ({ data, loading, error, onStateHover, onStateClick }: IndiaMap
         return stateData ? getVaccinationColor(stateData.fullyVaccinatedPercent) : "hsl(var(--muted))";
     };
 
-    if (loading) return <Card className="p-6 border-border"><div className="text-center py-8">Loading map...</div></Card>;
+    if (loading) return <Card className="p-6 border-border"><div className="flex justify-center items-center py-8"><Loader className="w-8 h-8 animate-spin text-primary" /></div></Card>;
     if (error) return <Card className="p-6 border-border"><div className="text-center py-8 text-red-500">Error: {error}</div></Card>;
 
     const stateData = indiaStates;

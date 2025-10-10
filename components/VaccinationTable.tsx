@@ -3,7 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { ArrowUpDown, Search } from "lucide-react";
+import { ArrowUpDown, Search, Loader } from "lucide-react";
 import { VaccinationData } from "@/types/vaccination";
 
 interface VaccinationTableProps {
@@ -46,7 +46,7 @@ const VaccinationTable = ({ data, loading, error }: VaccinationTableProps) => {
     }
   };
 
-  if (loading) return <Card className="p-6 border-border"><div className="text-center py-8">Loading table...</div></Card>;
+  if (loading) return <Card className="p-6 border-border"><div className="flex justify-center items-center py-8"><Loader className="w-8 h-8 animate-spin text-primary" /></div></Card>;
   if (error) return <Card className="p-6 border-border"><div className="text-center py-8 text-red-500">Error: {error}</div></Card>;
 
   return (

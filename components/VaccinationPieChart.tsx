@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from "recharts";
+import { Loader } from "lucide-react";
 import { VaccinationData } from "@/types/vaccination";
 
 interface VaccinationPieChartProps {
@@ -11,7 +12,7 @@ interface VaccinationPieChartProps {
 const COLORS = ["hsl(var(--vac-very-low))", "hsl(var(--vac-medium))", "hsl(var(--vac-very-high))"];
 
 const VaccinationPieChart = ({ data, loading, error }: VaccinationPieChartProps) => {
-  if (loading) return <Card className="p-6 border-border"><div className="text-center py-8">Loading pie chart...</div></Card>;
+  if (loading) return <Card className="p-6 border-border"><div className="flex justify-center items-center py-8"><Loader className="w-8 h-8 animate-spin text-primary" /></div></Card>;
   if (error) return <Card className="p-6 border-border"><div className="text-center py-8 text-red-500">Error: {error}</div></Card>;
 
   const totalPopulation = data.reduce((sum, state) => sum + state.totalPopulation, 0);
