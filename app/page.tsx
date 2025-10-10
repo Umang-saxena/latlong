@@ -11,6 +11,7 @@ import RateRangeSlider from "@/components/RateRangeSlider";
 import StateDetailsDialog from "@/components/StateDetailsDialog";
 import ColorLegend from "@/components/ColorLegend";
 import { VaccinationData } from "@/types/vaccination";
+import { regionMap } from "@/data/regions";
 
 export default function Home() {
   const [hoveredState, setHoveredState] = useState<string | null>(null);
@@ -46,52 +47,13 @@ export default function Home() {
       .finally(() => setLoading(false));
   }, []);
 
-  const regionMap: Record<string, string> = useMemo(() => ({
-    "Jammu and Kashmir": "North",
-    "Ladakh": "North",
-    "Himachal Pradesh": "North",
-    "Punjab": "North",
-    "Haryana": "North",
-    "Delhi": "North",
-    "Uttarakhand": "North",
-    "Uttar Pradesh": "Central",
-    "Rajasthan": "West",
-    "Gujarat": "West",
-    "Maharashtra": "West",
-    "Madhya Pradesh": "Central",
-    "Chhattisgarh": "Central",
-    "Bihar": "East",
-    "Jharkhand": "East",
-    "West Bengal": "East",
-    "Odisha": "East",
-    "Andhra Pradesh": "South",
-    "Karnataka": "South",
-    "Goa": "West",
-    "Kerala": "South",
-    "Tamil Nadu": "South",
-    "Telangana": "South",
-    "Sikkim": "Northeast",
-    "Assam": "Northeast",
-    "Arunachal Pradesh": "Northeast",
-    "Nagaland": "Northeast",
-    "Manipur": "Northeast",
-    "Mizoram": "Northeast",
-    "Tripura": "Northeast",
-    "Meghalaya": "Northeast",
-    "Puducherry": "South",
-    "Chandigarh": "North",
-    "Dadra and Nagar Haveli and Daman and Diu": "West",
-    "Andaman and Nicobar Islands": "South",
-    "Lakshadweep": "South"
-  }), []);
-
   const filteredData = useMemo(() => {
     return data.filter(state => {
       const regionMatch = selectedRegion === "All" || regionMap[state.state] === selectedRegion;
       const rateMatch = state.fullyVaccinatedPercent >= minRate && state.fullyVaccinatedPercent <= maxRate;
       return regionMatch && rateMatch;
     });
-  }, [data, selectedRegion, minRate, maxRate, regionMap]);
+  }, [data, selectedRegion, minRate, maxRate]);
 
   return (
     <div className="min-h-screen bg-background">
