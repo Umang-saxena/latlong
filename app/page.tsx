@@ -141,9 +141,9 @@ export default function Home() {
           </div>
         </div>
 
+        <ColorLegend />
         <VaccinationTable data={filteredData} loading={loading} error={error} />
 
-        <ColorLegend />
       </main>
 
       <StateDetailsDialog
