@@ -30,5 +30,10 @@ const RateRangeSlider = ({ minRate, maxRate, onMinRateChange, onMaxRateChange }:
           value={maxRate}
           onChange={(e) => onMaxRateChange(Number(e.target.value))}
           className="w-full"
+        />
+      </div>
+    </div>
+  );
+};
 
 export default RateRangeSlider;
