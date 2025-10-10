@@ -61,48 +61,50 @@ const VaccinationTable = ({ data, loading, error }: VaccinationTableProps) => {
           className="max-w-sm"
         />
       </div>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>
-              <Button variant="ghost" onClick={() => handleSort("state")}>
-                State <ArrowUpDown className="ml-2 h-4 w-4" />
-              </Button>
-            </TableHead>
-            <TableHead>
-              <Button variant="ghost" onClick={() => handleSort("totalPopulation")}>
-                Population <ArrowUpDown className="ml-2 h-4 w-4" />
-              </Button>
-            </TableHead>
-            <TableHead>
-              <Button variant="ghost" onClick={() => handleSort("firstDose")}>
-                First Dose <ArrowUpDown className="ml-2 h-4 w-4" />
-              </Button>
-            </TableHead>
-            <TableHead>
-              <Button variant="ghost" onClick={() => handleSort("secondDose")}>
-                Second Dose <ArrowUpDown className="ml-2 h-4 w-4" />
-              </Button>
-            </TableHead>
-            <TableHead>
-              <Button variant="ghost" onClick={() => handleSort("fullyVaccinatedPercent")}>
-                Coverage % <ArrowUpDown className="ml-2 h-4 w-4" />
-              </Button>
-            </TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {filteredAndSortedData.map((state) => (
-            <TableRow key={state.state}>
-              <TableCell className="font-medium">{state.state}</TableCell>
-              <TableCell>{state.totalPopulation.toLocaleString()}</TableCell>
-              <TableCell>{state.firstDose.toLocaleString()}</TableCell>
-              <TableCell>{state.secondDose.toLocaleString()}</TableCell>
-              <TableCell>{state.fullyVaccinatedPercent.toFixed(1)}%</TableCell>
+      <div className="max-h-96 overflow-y-auto">
+        <Table>
+          <TableHeader className="sticky top-0 bg-card z-10">
+            <TableRow>
+              <TableHead>
+                <Button variant="ghost" onClick={() => handleSort("state")}>
+                  State <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+              </TableHead>
+              <TableHead>
+                <Button variant="ghost" onClick={() => handleSort("totalPopulation")}>
+                  Population <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+              </TableHead>
+              <TableHead>
+                <Button variant="ghost" onClick={() => handleSort("firstDose")}>
+                  First Dose <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+              </TableHead>
+              <TableHead>
+                <Button variant="ghost" onClick={() => handleSort("secondDose")}>
+                  Second Dose <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+              </TableHead>
+              <TableHead>
+                <Button variant="ghost" onClick={() => handleSort("fullyVaccinatedPercent")}>
+                  Coverage % <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+              </TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {filteredAndSortedData.map((state) => (
+              <TableRow key={state.state}>
+                <TableCell className="font-medium">{state.state}</TableCell>
+                <TableCell>{state.totalPopulation.toLocaleString()}</TableCell>
+                <TableCell>{state.firstDose.toLocaleString()}</TableCell>
+                <TableCell>{state.secondDose.toLocaleString()}</TableCell>
+                <TableCell>{state.fullyVaccinatedPercent.toFixed(1)}%</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </Card>
   );
 };
