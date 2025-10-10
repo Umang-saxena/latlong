@@ -15,9 +15,10 @@ interface IndiaMapProps {
     loading: boolean;
     error: string | null;
     onStateHover: (state: string | null) => void;
+    onStateClick?: (state: string) => void;
 }
 
-const IndiaMap = ({ data, loading, error, onStateHover }: IndiaMapProps) => {
+const IndiaMap = ({ data, loading, error, onStateHover, onStateClick }: IndiaMapProps) => {
     const [tooltip, setTooltip] = useState<{ state: string; percent: number; x: number; y: number } | null>(null);
 
     const handleMouseEnter = (state: string, event: React.MouseEvent<SVGPathElement>) => {
@@ -37,6 +38,12 @@ const IndiaMap = ({ data, loading, error, onStateHover }: IndiaMapProps) => {
     const handleMouseLeave = () => {
         setTooltip(null);
         onStateHover(null);
+    };
+
+    const handleStateClick = (state: string) => {
+        if (onStateClick) {
+            onStateClick(state);
+        }
     };
 
     const getStateFill = (stateName: string) => {
@@ -102,6 +109,7 @@ const IndiaMap = ({ data, loading, error, onStateHover }: IndiaMapProps) => {
                                 className="cursor-pointer transition-all duration-300 hover:opacity-80 hover:stroke-primary hover:stroke-[3px]"
                                 onMouseEnter={(e) => handleMouseEnter(state.name, e)}
                                 onMouseLeave={handleMouseLeave}
+                                onClick={() => handleStateClick(state.name)}
                             />
                         ))}
                     </g>

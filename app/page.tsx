@@ -1,14 +1,23 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Activity } from "lucide-react";
 import VaccinationStats from "@/components/VaccinationStats";
 import IndiaMap from "@/components/IndiaMap";
 import VaccinationChart from "@/components/VaccinationChart";
+import VaccinationPieChart from "@/components/VaccinationPieChart";
+import VaccinationTable from "@/components/VaccinationTable";
+import RegionSelect from "@/components/RegionSelect";
+import RateRangeSlider from "@/components/RateRangeSlider";
+import StateDetailsDialog from "@/components/StateDetailsDialog";
 import ColorLegend from "@/components/ColorLegend";
 import { VaccinationData } from "@/types/vaccination";
 
 export default function Home() {
   const [hoveredState, setHoveredState] = useState<string | null>(null);
+  const [selectedState, setSelectedState] = useState<VaccinationData | null>(null);
+  const [selectedRegion, setSelectedRegion] = useState("All");
+  const [minRate, setMinRate] = useState(0);
+  const [maxRate, setMaxRate] = useState(100);
   const [data, setData] = useState<VaccinationData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -37,6 +46,53 @@ export default function Home() {
       .finally(() => setLoading(false));
   }, []);
 
+  const regionMap: Record<string, string> = useMemo(() => ({
+    "Jammu and Kashmir": "North",
+    "Ladakh": "North",
+    "Himachal Pradesh": "North",
+    "Punjab": "North",
+    "Haryana": "North",
+    "Delhi": "North",
+    "Uttarakhand": "North",
+    "Uttar Pradesh": "Central",
+    "Rajasthan": "West",
+    "Gujarat": "West",
+    "Maharashtra": "West",
+    "Madhya Pradesh": "Central",
+    "Chhattisgarh": "Central",
+    "Bihar": "East",
+    "Jharkhand": "East",
+    "West Bengal": "East",
+    "Odisha": "East",
+    "Andhra Pradesh": "South",
+    "Karnataka": "South",
+    "Goa": "West",
+    "Kerala": "South",
+    "Tamil Nadu": "South",
+    "Telangana": "South",
+    "Sikkim": "Northeast",
+    "Assam": "Northeast",
+    "Arunachal Pradesh": "Northeast",
+    "Nagaland": "Northeast",
+    "Manipur": "Northeast",
+    "Mizoram": "Northeast",
+    "Tripura": "Northeast",
+    "Meghalaya": "Northeast",
+    "Puducherry": "South",
+    "Chandigarh": "North",
+    "Dadra and Nagar Haveli and Daman and Diu": "West",
+    "Andaman and Nicobar Islands": "South",
+    "Lakshadweep": "South"
+  }), []);
+
+  const filteredData = useMemo(() => {
+    return data.filter(state => {
+      const regionMatch = selectedRegion === "All" || regionMap[state.state] === selectedRegion;
+      const rateMatch = state.fullyVaccinatedPercent >= minRate && state.fullyVaccinatedPercent <= maxRate;
+      return regionMatch && rateMatch;
+    });
+  }, [data, selectedRegion, minRate, maxRate, regionMap]);
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -56,17 +112,45 @@ export default function Home() {
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
-        <VaccinationStats data={data} loading={loading} error={error} />
+        <VaccinationStats data={filteredData} loading={loading} error={error} />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-          <IndiaMap data={data} loading={loading} error={error} onStateHover={setHoveredState} />
-          <div className="space-y-6">
-            <VaccinationChart data={data} loading={loading} error={error} hoveredState={hoveredState} />
+        {/* Filters */}
+        <div className="mb-6 space-y-4">
+          <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
+            <RegionSelect selectedRegion={selectedRegion} onRegionChange={setSelectedRegion} />
+            <RateRangeSlider
+              minRate={minRate}
+              maxRate={maxRate}
+              onMinRateChange={setMinRate}
+              onMaxRateChange={setMaxRate}
+            />
           </div>
         </div>
 
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+          <IndiaMap
+            data={filteredData}
+            loading={loading}
+            error={error}
+            onStateHover={setHoveredState}
+            onStateClick={(stateName) => setSelectedState(filteredData.find(d => d.state === stateName) || null)}
+          />
+          <div className="space-y-6">
+            <VaccinationChart data={filteredData} loading={loading} error={error} hoveredState={hoveredState} />
+            <VaccinationPieChart data={data} loading={loading} error={error} />
+          </div>
+        </div>
+
+        <VaccinationTable data={filteredData} loading={loading} error={error} />
+
         <ColorLegend />
       </main>
+
+      <StateDetailsDialog
+        state={selectedState}
+        isOpen={!!selectedState}
+        onClose={() => setSelectedState(null)}
+      />
 
       {/* Footer */}
       <footer className="border-t border-border bg-card mt-12">
